@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$#" ]; then
+    echo "Usage: $0 PROFILE"
+    exit -1
+fi
+
+PC_TYPE=$1
+
+# Create symbolic links targeting the configuration directories.
+ln -is ${PC_TYPE}/dotconfig/awesome ~/.config/awesome
+

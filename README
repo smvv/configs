@@ -1,0 +1,31 @@
+Collection of various configuration files used on my systems.
+
+Being tired of duplicating my carefully configured applications, I started this
+Git repository to be able to easily share and maintain my configuration files
+across multiple systems or system types.
+
+Even though both machine have completely different hardware, I use most of my
+software on both machines:
+
+ - Awesome      window manager
+ - Vim          advanced text editor
+ - Chromium     web browser
+
+For now, I have added the configuration files of two different computer
+profiles:
+
+  +----------+-------------+--------+
+  | Nickname | Profile     | Screen |
+  +----------+-------------+--------+
+  | Gentosis | Netbook     | 10.1"  |
+  | Deleuze  | Workstation | 27"    |
+  +----------+-------------+--------+
+
+Installation:
+
+Configure your computer using one of the following configuration groups:
+{netbook, workstation}. For example, I'll use "netbook" as profile for
+computers with a small screen:
+
+$ ./config netbook
+

@@ -52,7 +52,7 @@ layouts =
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-    names = {"1", "2", "3", "4", "5", "6"},
+    names = {"1", "2", "3", "4", "5", "6", "7", "8", "9"},
     layouts = {
         awful.layout.suit.max,
         awful.layout.suit.tile.left,
@@ -74,7 +74,7 @@ tags = {
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = {}
-    for tagnumber = 0, #tags.names do
+    for tagnumber = 1, #tags.names do
         -- Add tags and name them.
         tags[s][tagnumber] = tag({name=tags.names[tagnumber],
                 layout=tags.layouts[tagnumber]})

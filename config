@@ -9,4 +9,6 @@ PC_TYPE=$1
 
 # Create symbolic links targeting the configuration directories.
 ln -is ${PC_TYPE}/dotconfig/awesome ~/.config/awesome
+ln -is ${PC_TYPE}/.vim ~/.vim
+ln -is ${PC_TYPE}/.vimrc ~/.vimrc
 

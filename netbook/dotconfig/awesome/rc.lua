@@ -59,6 +59,9 @@ tags = {
         awful.layout.suit.tile.left,
         awful.layout.suit.tile.left,
         awful.layout.suit.tile.left,
+        awful.layout.suit.tile.left,
+        awful.layout.suit.tile.left,
+        awful.layout.suit.tile.left,
         awful.layout.suit.max
     }
 }

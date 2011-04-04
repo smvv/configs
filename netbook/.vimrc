@@ -93,6 +93,7 @@ colorscheme darkspectrum
 set title           " change the terminal's title
 set visualbell      " don't beep
 set noerrorbells    " don't beep
+set vb t_vb=        " don't beep
 set nocp            " Disable Vi-compatibility
 
 " syntax detection and filetype indention

@@ -6,14 +6,15 @@ if [ $# -lt 1 ] || [ $# -gt 2 ]; then
 fi
 
 # Switch script's directory
-cd `dirname $0`
+cd `dirname "$0"`
 
-PROFILE=$1
+PROFILE="$1"
 CONFIG_DIR=~/.config/
-if [ $# -eq 2 ]; then CONFIG_DIR=$2; fi
+if [ $# -eq 2 ]; then CONFIG_DIR="$2"; fi
 
 # Create symbolic links targeting the configuration directories.
-ln -is "`pwd`/${PROFILE}/dotconfig/awesome/" ${CONFIG_DIR}
+ln -is "`pwd`/${PROFILE}/dotconfig/awesome/" "${CONFIG_DIR}"
+ln -is "`pwd`/${PROFILE}/etc/make.conf" "/etc/make.conf"
 ln -is "`pwd`/${PROFILE}/.vim"   ~/.vim
 ln -is "`pwd`/${PROFILE}/.vimrc" ~/.vimrc
 

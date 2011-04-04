@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/usr/lib/python2.6/site-packages/web'
-let g:netrw_dirhist_2='/usr/lib/python2.6/site-packages/web/contrib'
-let g:netrw_dirhist_3='/usr/lib/python2.6/site-packages/web'

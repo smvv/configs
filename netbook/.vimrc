@@ -100,8 +100,8 @@ set nocp            " Disable Vi-compatibility
 filetype plugin indent on
 syntax enable
 
-autocmd BufReadPre *.pdf set ro nowrap
-autocmd BufReadPost *.pdf silent %!pdftotext "%" -nopgbrk -layout -q -eol unix -
+" autocmd BufReadPre *.pdf set ro nowrap
+" autocmd BufReadPost *.pdf silent %!pdftotext "%" -nopgbrk -layout -q -eol unix -
 
 " Automatically remove all trailing spaces
 autocmd BufWritePre * :%s/\s\+$//e
@@ -151,6 +151,9 @@ nnoremap k gk
 
 " It clears the search buffer (and highlighting) when you press ,/
 nmap <silent> ,/ :nohlsearch<CR>
+
+" Invoke `make' command when you press ",m".
+nmap <silent> ,m :!make<CR>
 
 " when you forgot to sudo before editing a file that requires root privileges.
 " This lets you use w!! to do that after you opened the file already:

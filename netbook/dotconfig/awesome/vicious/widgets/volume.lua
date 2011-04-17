@@ -21,7 +21,7 @@ local function worker(format, warg)
 
     local mixer_state = {
         ["on"]  = "",
-        ["off"] = "!",
+        ["off"] = "M",
     --    ["on"]  = "♫", -- "",
     --    ["off"] = "♩"  -- "M"
     }

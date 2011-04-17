@@ -10,7 +10,6 @@ theme = {}
 theme.confdir       = awful.util.getdir("config")
 -- theme.wallpaper_cmd = { "/usr/bin/nitrogen --restore" }
 theme.wallpaper_cmd = { "awsetbg /usr/share/awesome/themes/zenburn/zenburn-background.png" }
--- theme.wallpaper_cmd = { "awsetbg /home/sander/Documents/Backgrounds/simplicity-is-good.png" }
 -- }}}
 
 
@@ -27,7 +26,7 @@ theme.bg_urgent = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
-theme.border_width  = 1
+theme.border_width  = 0
 theme.border_focus  = "#6F6F6F"
 theme.border_normal = theme.bg_normal
 theme.border_marked = theme.fg_urgent

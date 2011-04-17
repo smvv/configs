@@ -168,7 +168,7 @@ vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 
 ---- Volume box widget
 volwidget = widget({type = "textbox"})
-vicious.register(volwidget, vicious.widgets.volume, " $2 $1 ", 5, 'Master')
+vicious.register(volwidget, vicious.widgets.volume, " $1 $2 ", 5, 'Master')
 
 --volbox = widget({ type = "textbox", name = "volbox", align = "right" })
 --vicious.register(volbox, vicious.widgets.volbox, function (widget, args)

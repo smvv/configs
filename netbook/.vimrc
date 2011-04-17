@@ -115,7 +115,7 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 " --------------
 " Source folding
 " --------------
-set foldmethod=indent
+"set foldmethod=indent
 
 " -------------
 " File explorer

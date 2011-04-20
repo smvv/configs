@@ -24,9 +24,6 @@ set wildignore=*.swp,*.bak,*.pyc,*.class,*.old
 
 set textwidth=80
 
-" -- run in gnome-terminal: --
-" export TERM="xterm-256color"
-
 " IMPORTANT: Uncomment one of the following lines to force
 " using 256 colors (or 88 colors) if your terminal supports it,
 " but does not automatically use 256 colors by default.
@@ -34,46 +31,12 @@ set background=dark
 
 " -- run in gnome-terminal: --
 " export TERM="xterm-256color"
-
-if $COLORTERM == 'gnome-terminal'
-	set t_Co=256
-endif
-
-" ,rl = run pdflatex (on current file)
-"map ,rl :!pdflatex -src -shell-escape -interaction=nonstopmode %
-
-" trigger pdflatex (above) on FileWritePost event
-":autocmd BufWritePost *.tex :!pdflatex -src -shell-escape -interaction=nonstopmode % | grep -A 4 -i "error"
-
-"set textwidth=80
+set t_Co=256
 
 augroup vimrc_autocmds
     autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
     autocmd BufEnter * match OverLength /\%81v.*/
 augroup END
-
-" configure tags - add additional tags here or comment out not-used ones
-" cd /usr/include
-" ctags -R --sort=yes --fields=+iaS -f ~/.vim/tags/stdc stdio.h stdlib.h \
-"   pthread.h math.h assert.h errno.h malloc.h strings.h fcntl.h unistd.h
-" ctags -R --sort=yes --fields=+iaS -f ~/.vim/tags/gl GL/
-"set tags+=~/.vim/tags/stdc
-"set tags+=~/.vim/tags/gl
-
-
-" build tags of your own project with CTRL+F12
-"map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-"noremap <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
-"inoremap <F12> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
-
-"" OmniCppComplete
-"let OmniCpp_NamespaceSearch = 1
-"let OmniCpp_GlobalScopeSearch = 1
-"let OmniCpp_ShowAccess = 1
-"let OmniCpp_MayCompleteDot = 1
-"let OmniCpp_MayCompleteArrow = 1
-"let OmniCpp_MayCompleteScope = 1
-"let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
 "" automatically open and close the popup menu / preview window
 "au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
@@ -84,8 +47,6 @@ augroup END
 "filetype plugin on
 
 colorscheme darkspectrum
-
-"colorscheme darkspectrum
 
 " ------------------
 " Various vim tweaks

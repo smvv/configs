@@ -9,7 +9,8 @@ software on both machines:
 
  - Awesome      window manager
  - Vim          advanced text editor
- - Chromium     web browser
+ - Emacs        programming environment. Eventually, it will replace my vim ;)
+ - Firefox      web browser
 
 For now, I have added the configuration files of two different computer
 profiles:

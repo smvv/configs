@@ -18,7 +18,7 @@ for f in awesome/; do
         && echo ln -is "`pwd`/${PROFILE}/dotconfig/$f" "${CONFIG_DIR}/$f"
 done
 
-for f in .vim .vimrc ; do
+for f in .emacs.d .emacs .gvimrc .vim .vimrc ; do
     ln -is "`pwd`/${PROFILE}/$f" "`echo ~`/$f"
 done
 
@@ -26,7 +26,7 @@ for f in make.conf; do
     ln -is "`pwd`/${PROFILE}/etc/$f" "/etc/$f"
 done
 
-for f in clip2goog clip2firefox; do
+for f in elipslint clip2goog clip2firefox; do
     sudo ln -is "`pwd`/${PROFILE}/usr/bin/$f" "/usr/bin/$f"
 done
 

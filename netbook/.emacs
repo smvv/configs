@@ -13,15 +13,24 @@
 ; Don't wrap long lines.
 (set-default 'truncate-lines t)
 
+; Remove trailing whitespace on buffer save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+; Git support
+(load "git.el")
+;(load "/usr/share/doc/git-core/contrib/emacs/git-blame.el")
+(load "vc-git.el")
+(add-to-list 'vc-handled-backends 'GIT)
+
 ;Load flymake for syntax checking (and pyflakes for python syntax).
-(when (load "flymake" t) 
- (defun flymake-pyflakes-init () 
-  (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                              'flymake-create-temp-inplace))
-    (local-file (file-relative-name temp-file-name-directory buffer-file-name))))
-; (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;                       'flymake-create-temp-inplace))
-;         (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
-   (list "pyflakes" (list local-file))))
- (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pyflakes-init))
-(add-hook 'find-file-hook 'flymake-find-file-hook)
+;(when (load "flymake" t)
+; (defun flymake-pyflakes-init ()
+;  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;                              'flymake-create-temp-inplace))
+;    (local-file (file-relative-name temp-file-name-directory buffer-file-name))))
+;; (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                       'flymake-create-temp-inplace))
+;;         (local-file (file-relative-name temp-file (file-name-directory buffer-file-name))))
+;   (list "pyflakes" (list local-file))))
+; (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pyflakes-init))
+;(add-hook 'find-file-hook 'flymake-find-file-hook)

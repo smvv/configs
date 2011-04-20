@@ -314,9 +314,11 @@ clientkeys = awful.util.table.join(
     awful.key({modkey,"Shift"  }, "c",      function (c) c:kill()                         end),
     awful.key({modkey,"Control"}, "space",  awful.client.floating.toggle                     ),
     awful.key({modkey,"Control"}, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({modkey,         }, "o",      awful.client.movetoscreen                        ),
+    --awful.key({modkey,       }, "o",      awful.client.movetoscreen                        ),
     awful.key({modkey,"Shift"  }, "r",      function (c) c:redraw()                       end),
     awful.key({modkey,         }, "t",      function (c) c.ontop = not c.ontop            end),
+    awful.key({modkey,         }, "g",      function (c) awful.util.spawn("clip2goog")    end),
+    awful.key({modkey,         }, "o",      function (c) awful.util.spawn("clip2firefox") end),
     awful.key({modkey,         }, "n",      function (c) c.minimized = not c.minimized    end),
     awful.key({modkey,         }, "m",      function (c)
         c.maximized_horizontal = not c.maximized_horizontal
@@ -438,7 +440,6 @@ autorun = true
 autorunApps =
 {
     terminal,
-    --'chromium',
 }
 if autorun then
    for _, app in pairs(autorunApps) do

@@ -48,6 +48,9 @@
      (font-lock-variable-name-face ((t (:foreground "#729FCF"))))
      (font-lock-warning-face ((t (:bold t :foreground "Pink"))))
 
+     (flymake-errline-face ((t (:underline t :background nil))))
+     (flymake-warnline-face ((t (:underline t :background nil))))
+
      (gui-element ((t (:background "#D4D0C8" :foreground "black"))))
      (region ((t (:background "#253B76"))))
      (mode-line ((t (:foreground "#cccccc"))))

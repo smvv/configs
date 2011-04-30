@@ -18,7 +18,7 @@ for f in awesome/; do
         && echo ln -is "`pwd`/${PROFILE}/dotconfig/$f" "${CONFIG_DIR}/$f"
 done
 
-for f in .emacs.d .emacs .gvimrc .vim .vimrc ; do
+for f in .bashrc .emacs.d .emacs .gvimrc .vim .vimrc ; do
     ln -is "`pwd`/${PROFILE}/$f" "`echo ~`/$f"
 done
 

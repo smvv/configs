@@ -21,7 +21,7 @@
 (load-file "~/.emacs.d/themes/color-theme-darkspectrum.el")
 (color-theme-darkspectrum)
 
-;; arg >= 1 enable the menu bar.p
+;; arg >= 1 enable the menu bar.
 (menu-bar-mode 0)
 
 ;; Make all "yes or no" prompts show "y or n" instead
@@ -59,6 +59,24 @@
 (setq-default fill-column 80)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
+;; Change the indentation level to 4 spaces and set indentation style to `linux'
+;; (instead of the default 2 spaces and `GNU' style).
+(setq c-default-style "linux" c-basic-offset 4)
+
+;; Copy lines in the kill ring.
+(defun jao-copy-line (arg)
+  "Copy lines (as many as prefix argument) in the kill ring."
+  (interactive "p")
+  (kill-ring-save (line-beginning-position)
+		  (line-beginning-position (+ 1 arg)))
+  (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
+
+;; Auto-indent after yanking lines
+(defadvice yank (after indent-region activate)
+  (if (member major-mode '(emacs-lisp-mode scheme-mode lisp-mode c-common-mode
+					   LaTeX-mode TeX-mode python-mode))
+      (indent-region (region-beginning) (region-end) nil)))
+
 ;; ---------------------------------------------------------------------------
 ;; Git support
 ;; ---------------------------------------------------------------------------
@@ -92,8 +110,18 @@
 ;; Show matching parenthesis. How can you live without it.
 (show-paren-mode t)
 
+;; Highlight special words like `TODO', `FIXME' and `BUG'.
+(add-hook 'c-mode-common-hook
+	  (lambda () (font-lock-add-keywords nil
+					     '(("\\<\\(FIXME\\|TODO\\|BUG\\):"
+						1 font-lock-warning-face t)))))
+(add-hook 'python-mode-hook
+	  (lambda () (font-lock-add-keywords nil
+					     '(("\\<\\(FIXME\\|TODO\\|BUG\\):"
+						1 font-lock-warning-face t)))))
+
 ;; ---------------------------------------------------------------------------
-;; Gnus settings
+;; Gnus (mail / usenet) settings
 ;; ---------------------------------------------------------------------------
 
 (defun gnus-init ()

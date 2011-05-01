@@ -63,18 +63,21 @@
 ;; (instead of the default 2 spaces and `GNU' style).
 (setq c-default-style "linux" c-basic-offset 4)
 
+;; I hate tabs!
+(setq-default indent-tabs-mode nil)
+
 ;; Copy lines in the kill ring.
 (defun jao-copy-line (arg)
   "Copy lines (as many as prefix argument) in the kill ring."
   (interactive "p")
   (kill-ring-save (line-beginning-position)
-		  (line-beginning-position (+ 1 arg)))
+                  (line-beginning-position (+ 1 arg)))
   (message "%d line%s copied" arg (if (= 1 arg) "" "s")))
 
 ;; Auto-indent after yanking lines
 (defadvice yank (after indent-region activate)
   (if (member major-mode '(emacs-lisp-mode scheme-mode lisp-mode c-common-mode
-					   LaTeX-mode TeX-mode python-mode))
+                                           LaTeX-mode TeX-mode python-mode))
       (indent-region (region-beginning) (region-end) nil)))
 
 ;; ---------------------------------------------------------------------------
@@ -112,13 +115,17 @@
 
 ;; Highlight special words like `TODO', `FIXME' and `BUG'.
 (add-hook 'c-mode-common-hook
-	  (lambda () (font-lock-add-keywords nil
-					     '(("\\<\\(FIXME\\|TODO\\|BUG\\):"
-						1 font-lock-warning-face t)))))
+          (lambda () (font-lock-add-keywords nil
+                                             '(("\\<\\(FIXME\\|TODO\\|BUG\\):"
+                                                1 font-lock-warning-face t)))))
 (add-hook 'python-mode-hook
-	  (lambda () (font-lock-add-keywords nil
-					     '(("\\<\\(FIXME\\|TODO\\|BUG\\):"
-						1 font-lock-warning-face t)))))
+          (lambda () (font-lock-add-keywords nil
+                                             '(("\\<\\(FIXME\\|TODO\\|BUG\\):"
+                                                1 font-lock-warning-face t)))))
+
+;; Highlight annoying tabs and trailing spaces.
+(highlight-tabs)
+(highlight-trailing-whitespace)
 
 ;; ---------------------------------------------------------------------------
 ;; Gnus (mail / usenet) settings
@@ -129,7 +136,7 @@
   (add-hook 'emacs-startup-hook 'gnus t)
   ;; Exit Emacs after quitting Gnus
   (add-hook 'gnus-after-exiting-gnus-hook
-	    'save-buffers-kill-emacs))
+            'save-buffers-kill-emacs))
 
 ;; ---------------------------------------------------------------------------
 ;; Syntax checking
@@ -166,25 +173,39 @@ makes)."
     (unless (stringp file-name) (error "Invalid file-name"))
     (or prefix (setq prefix "flymake"))
     (let* ((name (concat
-		  (file-name-nondirectory
-		   (file-name-sans-extension file-name))
-		  "_" prefix))
-	   (ext  (concat "." (file-name-extension file-name)))
-	   (temp-name (make-temp-file name nil ext)))
+                  (file-name-nondirectory
+                   (file-name-sans-extension file-name))
+                  "_" prefix))
+           (ext  (concat "." (file-name-extension file-name)))
+           (temp-name (make-temp-file name nil ext)))
       (flymake-log 3 "create-temp-intemp: file=%s temp=%s" file-name temp-name)
       temp-name))
 
   (defun flymake-pyflakes-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-intemp))
-	   (local-file (file-relative-name
-			temp-file
-			(file-name-directory buffer-file-name))))
+                       'flymake-create-temp-intemp))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
       (list "pyflakes" (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
-	       '("\\.py\\'" flymake-pyflakes-init)))
+               '("\\.py\\'" flymake-pyflakes-init)))
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 (provide 'init_python)
 
 ;; Dispaly flymake warnings and errors at the minibuffer.
 (load-file "~/.emacs.d/plugins/flymake-err-msg.el")
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(py-XXX-tag-face ((t (:background "#ef5939" :foreground "#fff"))) t)
+ '(py-builtins-face ((t (:foreground "#8ae234" :weight bold))) t)
+ '(py-pseudo-keyword-face ((t (:foreground "white"))) t))

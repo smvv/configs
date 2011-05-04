@@ -124,8 +124,8 @@
                                                 1 font-lock-warning-face t)))))
 
 ;; Highlight annoying tabs and trailing spaces.
-(highlight-tabs)
-(highlight-trailing-whitespace)
+;;(highlight-tabs)
+;;(highlight-trailing-whitespace)
 
 ;; ---------------------------------------------------------------------------
 ;; Gnus (mail / usenet) settings
@@ -193,8 +193,34 @@ makes)."
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 (provide 'init_python)
 
-;; Dispaly flymake warnings and errors at the minibuffer.
+;; Display flymake warnings and errors at the minibuffer.
 (load-file "~/.emacs.d/plugins/flymake-err-msg.el")
+
+;; ---------------------------------------------------------------------------
+;; Python settings
+;; ---------------------------------------------------------------------------
+
+;; python-mode settings
+(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+(setq interpreter-mode-alist(cons '("python" . python-mode)
+                             interpreter-mode-alist))
+;; path to the python interpreter, e.g.: ~rw/python27/bin/python2.7
+(setq py-python-command "python")
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+
+;; pymacs settings
+(setq pymacs-python-command py-python-command)
+(autoload 'pymacs-load "pymacs" nil t)
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+
+(require 'pycomplete)
+
+;; ---------------------------------------------------------------------------
+;; Custom variables
+;; ---------------------------------------------------------------------------
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,4 +1,4 @@
 *.swp
 *.netrwhist
 *~
-*/.emacs.d/byte-cache/
+*/.emacs.d/byte-cache/*.pyc

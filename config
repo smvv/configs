@@ -15,7 +15,7 @@ if [ $# -eq 2 ]; then CONFIG_DIR="$2"; fi
 # Create symbolic links targeting the configuration directories.
 for f in awesome/; do
     [ ! -d "${CONFIG_DIR}/$f" ] \
-        && echo ln -is "`pwd`/${PROFILE}/dotconfig/$f" "${CONFIG_DIR}/$f"
+        && ln -is "`pwd`/${PROFILE}/dotconfig/$f" "${CONFIG_DIR}/$f"
 done
 
 for f in .bashrc .emacs.d .emacs .gvimrc .vim .vimrc ; do

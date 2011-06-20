@@ -440,6 +440,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 autorun = true
 autorunApps =
 {
+    "xcompmgr",
     terminal,
     "firefox",
     "liferea",

@@ -8,8 +8,10 @@
 
 -- {{{ Main
 theme = {}
-theme.wallpaper_cmd = { "awsetbg /usr/share/awesome/themes/zenburn/zenburn-background.png" }
--- theme.wallpaper_cmd = { "awsetbg /home/sander/Documents/Backgrounds/simplicity-is-good.png" }
+beautiful.init()
+--theme.wallpaper_cmd = { "awsetbg /usr/share/awesome/themes/zenburn/zenburn-background.png" }
+theme.wallpaper_cmd = { "awsetbg /home/".. os.getenv("USER")
+                .. "/configs/backgrounds/june-11-monsoon__51-calendar-1920x1200.jpg" }
 -- }}}
 
 -- {{{ Styles
@@ -25,7 +27,7 @@ theme.bg_urgent = "#3F3F3F"
 -- }}}
 
 -- {{{ Borders
-theme.border_width  = "1"
+theme.border_width  = "0"
 theme.border_normal = "#3F3F3F"
 theme.border_focus  = "#6F6F6F"
 theme.border_marked = "#CC9393"

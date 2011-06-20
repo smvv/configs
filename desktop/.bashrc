@@ -24,6 +24,7 @@ if [[ "$TERM" != "linux" ]] ; then
     alias suspend="dbus-send --system --print-reply \
         --dest=org.freedesktop.UPower /org/freedesktop/UPower \
         org.freedesktop.UPower.Suspend"
+    alias fx="~/fx6/dist/bin/firefox &>/dev/null & disown \$!"
 fi
 
 # Load system-wide CFLAGS, CXXFLAGS and LDFLAGS.

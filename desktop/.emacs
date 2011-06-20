@@ -58,7 +58,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Automatic refilling of text or code, based on line width
-(setq-default fill-column 80)
+(setq-default fill-column 79)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; Change the indentation level to 4 spaces and set indentation style to `linux'
@@ -139,6 +139,26 @@
   ;; Exit Emacs after quitting Gnus
   (add-hook 'gnus-after-exiting-gnus-hook
             'save-buffers-kill-emacs))
+
+
+;; ---------------------------------------------------------------------------
+;; Third party applications
+;; ---------------------------------------------------------------------------
+
+(defun browse-url-firefox-new-tab (url &optional new-window)
+  "Open URL in a new tab in Firefox."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (if (string= (substring url 0 1) "/")
+      (setq url (concat "file://" url)))\
+      (let ((cmd (shell-command-to-string
+                  (concat "~/.emacs.d/firefox/loadurl.sh -a any 'openURL("
+                          url ",new-tab)'"))))
+    (unless (string= "" cmd)
+      (message "Starting Firefox...")
+      (start-process (concat "firefox " url) nil "firefox" url)
+      (message "Starting Firefox...done"))))
+
+(setq browse-url-browser-function 'browse-url-firefox-new-tab)
 
 ;; ---------------------------------------------------------------------------
 ;; Syntax checking

@@ -22,7 +22,7 @@ set history=1000    " remember more commands and search history
 set undolevels=1000 " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.old
 
-set textwidth=80
+set textwidth=79
 
 " IMPORTANT: Uncomment one of the following lines to force
 " using 256 colors (or 88 colors) if your terminal supports it,

@@ -9,7 +9,7 @@ software on both machines:
 
  - Awesome      window manager
  - Vim          advanced text editor
- - Emacs        programming environment. Eventually, it will replace my vim ;)
+ - Emacs        programming environment
  - Firefox      web browser
 
 For now, I have added the configuration files of two different computer
@@ -20,6 +20,7 @@ profiles:
   +----------+-------------+--------+
   | Gentosis | Netbook     | 10.1"  |
   | Deleuze  | Workstation | 27"    |
+  | Multivac | Server      | None   |
   +----------+-------------+--------+
 
 Installation:

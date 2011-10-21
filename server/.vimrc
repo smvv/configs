@@ -8,11 +8,22 @@
 
 set modeline        " Check beginning and end of file for file-specific Vim
                     " settings. Modelines contain the string "vim:" or "ex:".
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.old
+set autoread        " Read the contents of a file, if it has been modified.
 set autowrite       " Write the contents of the file, if it has been modified.
                     " When <C-Z> is pressed, Vim will write to the file.
 set showcmd         " Show (partial) command in the last line of the screen.
 set cmdheight=1     " Number of screen lines to use for the command-line.
+
+
+" Wildmenu
+set wildmenu        " use wildmenu
+set wildcharm=<TAB> " autocomplete
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.old
+
+
+" Open help in a vsplit rather than a split
+command! -nargs=? -complete=help Help :vertical help <args>
+cabbrev h h<C-\>esubstitute(getcmdline(), '^h\>', 'Help', '')<CR>
 
 " Enable persistent undo history
 set undofile
@@ -93,16 +104,27 @@ nmap Q gqap
 vnoremap < <gv
 vnoremap > >gv
 
+
+" Nice scrolling if line is wrapped.
+noremap j gj
+noremap k gk
+
+
+" Quickfix fast navigation
+nnoremap <silent> ,nn :cwindow<CR>:cn<CR>
+nnoremap <silent> ,pp :cwindow<CR>:cp<CR>
+
 nmap ,s Vip :!sort<CR> 
 
-" It clears the search buffer (and highlighting) when you press ,/
+" It clears the search buffer (and highlighting) when you press ",/".
 nmap <silent> ,/ :nohlsearch<CR>
 
 " Invoke `sort' command on line selection when you press ",s".
 vmap <silent> ,s :!sort<CR>
 
-" Invoke `pyflakes' command when you press ",p".
-nmap <silent> ,p :!pyflakes .<CR>
+" Invoke `pyflakes' command when you press ",py".
+nmap <silent> ,py :!pyflakes .<CR>
 
-" Invoke `make' command when you press ",m".
-nmap <silent> ,m :!make<CR>
+" Invoke `make' commands when you press ",mX".
+nmap <silent> ,ma :!make<CR>
+nmap <silent> ,mt :!make test<CR>

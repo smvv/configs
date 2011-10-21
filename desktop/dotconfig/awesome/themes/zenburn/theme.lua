@@ -10,8 +10,7 @@
 theme = {}
 beautiful.init()
 --theme.wallpaper_cmd = { "awsetbg /usr/share/awesome/themes/zenburn/zenburn-background.png" }
-theme.wallpaper_cmd = { "awsetbg /home/".. os.getenv("USER")
-                .. "/configs/backgrounds/june-11-monsoon__51-calendar-1920x1200.jpg" }
+theme.wallpaper_cmd = { "awsetbg -r /home/".. os.getenv("USER") .. "/docs/backgrounds/" }
 -- }}}
 
 -- {{{ Styles

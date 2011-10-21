@@ -19,6 +19,7 @@ beautiful.init("/home/".. os.getenv("USER")
                 .. "/.config/awesome/themes/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
+-- terminal = "urxvt"
 terminal = "terminal"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
@@ -47,8 +48,6 @@ layouts =
     awful.layout.suit.magnifier
 }
 -- }}}
-
---print(string.format('Generating tag table (screens: %d)...', screen.count()))
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
@@ -94,25 +93,25 @@ end
 -- }}}
 
 -- {{{ Menu
--- Create a laucher widget and a main menu
-myawesomemenu = {
-    { "manual", terminal .. " -e man awesome" },
-    { "edit config", editor_cmd .. " " .. awful.util.getdir("config")
-         .. "/rc.lua" },
-    { "restart", awesome.restart },
-    { "quit", awesome.quit },
-    { "shutdown", 'gksudo poweroff' },
-}
-
--- debian.menu.Debian_menu.Debian = tunion(debian.menu.Debian_menu.Debian,
---                                         {{"awesome", myawesomemenu},
---                                          {"open terminal", terminal}})
-
-mymainmenu = awful.menu({items = {
-    {"awesome", myawesomemenu, beautiful.awesome_icon},
-    -- {"Debian", debian.menu.Debian_menu.Debian},
-    {"open terminal", terminal}
-}})
+---- Create a laucher widget and a main menu
+--myawesomemenu = {
+--    { "manual", terminal .. " -e man awesome" },
+--    { "edit config", editor_cmd .. " " .. awful.util.getdir("config")
+--         .. "/rc.lua" },
+--    { "restart", awesome.restart },
+--    { "quit", awesome.quit },
+--    { "shutdown", 'gksudo poweroff' },
+--}
+--
+---- debian.menu.Debian_menu.Debian = tunion(debian.menu.Debian_menu.Debian,
+----                                         {{"awesome", myawesomemenu},
+----                                          {"open terminal", terminal}})
+--
+--mymainmenu = awful.menu({items = {
+--    {"awesome", myawesomemenu, beautiful.awesome_icon},
+--    -- {"Debian", debian.menu.Debian_menu.Debian},
+--    {"open terminal", terminal}
+--}})
 
 -- mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 --                                      menu = mymainmenu })
@@ -192,6 +191,18 @@ vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 --batwidget:set_gradient_colors({ "#AECF96", "#88A175", "#FF5656" })
 --vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
 
+--cpuwidget = widget({type = "textbox"})
+--vicious.register(cpuwidget, vicious.widgets.cpu, " | $1% ")
+
+cpuwidget = awful.widget.graph()
+cpuwidget:set_width(50)
+cpuwidget:set_background_color("#494B4F")
+cpuwidget:set_color("#88A175")
+--cpuwidget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
+
+-- Register widget
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt({ layout =
@@ -230,6 +241,7 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         --mytextclock,
         --volwidget,
+        cpuwidget,
         datewidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
@@ -240,7 +252,7 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    --awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -260,9 +272,9 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,         }, "w",      function ()
-        mymainmenu:show({keygrabber=true})
-    end),
+    --awful.key({ modkey,         }, "w",      function ()
+    --    mymainmenu:show({keygrabber=true})
+    --end),
 
     -- Layout manipulation
     awful.key({modkey, "Shift"  }, "j",      function () awful.client.swap.byidx(  1)    end),
@@ -391,6 +403,10 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { class = "gimp" }, properties = { floating = true } },
     { rule = { class = "chromium" }, properties = { tags = tags[1][2] } },
+    { rule = { class = "liferea" }, properties = { tags = tags[1][2] } },
+    { rule = { class = "Wine" }, properties = { floating = true } },
+    { rule = { class = "QEMU" }, properties = { floating = true } },
+
     -- Set Firefox to always map on tags number 3 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
@@ -442,9 +458,10 @@ autorunApps =
 {
     "xcompmgr",
     terminal,
-    "firefox",
+    --"firefox",
     "liferea",
-    "radiotray"
+    "radiotray",
+    "sh -c 'transset-df -i $(xwininfo -root -tree | grep \"(has no name): ()  1920x19+0+0\" | egrep -o \"0x[a-z0-9]{4,}\") 0.8'",
 }
 if autorun then
    for _, app in pairs(autorunApps) do

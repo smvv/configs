@@ -1,0 +1,3 @@
+[submodule "pyflakes"]
+	path = pyflakes
+	url = git://github.com/kevinw/pyflakes.git

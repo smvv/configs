@@ -13,40 +13,44 @@
 
 hi clear
 
-set background=dark
 if version > 580
     " no guarantees for version 5.8 and below, but this makes it stop
     " complaining
     hi clear
+
     if exists("syntax_on")
-    syntax reset
+        syntax reset
     endif
 endif
+
+set background=dark
+
 let g:colors_name="darkspectrum"
 
-hi Normal guifg=#efefef
+hi Normal guifg=#efefef guibg=none
 
 " highlight groups
 hi Cursor       guibg=#ffffff guifg=#000000
 hi CursorLine   guibg=#000000
 "hi CursorColumn guibg=#464646
 
-"hi DiffText     guibg=#4e9a06 guifg=#FFFFFF gui=bold
-"hi DiffChange   guibg=#4e9a06 guifg=#FFFFFF gui=bold
-"hi DiffAdd      guibg=#204a87 guifg=#FFFFFF gui=bold
-"hi DiffDelete   guibg=#5c3566 guifg=#FFFFFF gui=bold
+"hi diffText     guibg=#4e9a06 guifg=#FFFFFF gui=bold
+"hi diffChange   guibg=#4e9a06 guifg=#FFFFFF gui=bold
+"hi diffAdd      guibg=#204a87 guifg=#FFFFFF gui=bold
+"hi diffDelete   guibg=#5c3566 guifg=#FFFFFF gui=bold
 
-hi DiffAdd      guifg=#ffcc7f guibg=#a67429 gui=none
-hi DiffChange   guifg=#7fbdff guibg=#425c78 gui=none
-hi DiffText     guifg=#8ae234 guibg=#4e9a06 gui=none
-"hi DiffDelete   guifg=#252723 guibg=#000000 gui=none
-hi DiffDelete   guifg=#000000 guibg=#000000 gui=none
-"hi ErrorMsg
 
-"DiffAdd        xxx term=bold ctermbg=81 guibg=LightBlue
-"DiffChange     xxx term=bold ctermbg=225 guibg=LightMagenta
-"DiffDelete     xxx term=bold ctermfg=12 ctermbg=159 gui=bold guifg=Blue guibg=LightCyan
-"DiffText       xxx term=reverse cterm=bold ctermbg=9 gui=bold guibg=Red
+hi diffFile     guifg=#aaaaaa gui=none
+hi diffNewFile  guifg=#aaaaaa gui=none
+""hi DiffAdd      guifg=#ffcc7f guibg=#a67429 gui=none
+hi diffAdded    guifg=#44cc44 gui=none
+hi diffChange   guifg=#7fbdff gui=none
+hi diffRemoved  guifg=#aa2723 gui=none
+
+"hi DiffAdd    gui=none guifg=#ffcc7f guibg=none
+"hi DiffChange gui=none guifg=bg guibg=none
+"hi DiffDelete gui=none guifg=bg guibg=none
+"hi DiffText   gui=none guifg=bg guibg=none
 
 hi Number       guifg=#fce94f
 

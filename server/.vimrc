@@ -31,6 +31,30 @@ set undodir=~/.vim/undo
 set history=1000    " remember more commands and search history
 set undolevels=1000 " use many muchos levels of undo
 
+" Set utf-8 encoding as default encoding
+set encoding=utf-8
+set fileencodings=utf-8,cp1251
+set termencoding=utf-8
+
+" My OMGWTFBBQ statusline
+set statusline=%f      " path from cwd to filename
+set statusline+=\ \    " separator
+set statusline+=%h     " help file flag
+set statusline+=%m     " modified flag
+set statusline+=%r     " read only flag
+set statusline+=%=     " left/right separator
+set statusline+=%#Comment#  " change colors
+set statusline+=%y     " filetype
+set statusline+=%0*    " set default colors
+set statusline+=\      " separator
+set statusline+=%#Constant#  " change colors
+set statusline+=%{fugitive#statusline()} " git status line
+set statusline+=%0*    " set default colors
+set statusline+=\      " separator
+set statusline+=%c,    " cursor column
+set statusline+=%l/%L  " cursor line/total lines
+set statusline+=\ %P   " percent through file
+
 " --------------------
 " Disable visual bells
 " --------------------
@@ -49,13 +73,19 @@ set background=dark
 
 set t_Co=256
 "set t_Co=88
-if (&t_Co == 256 || &t_Co == 88) && !has('gui_running') &&
-  \ filereadable(expand("$HOME/.vim/plugin/guicolorscheme.vim"))
-    " Use the guicolorscheme plugin to makes 256-color or 88-color
-    " terminal use GUI colors rather than cterm colors.
-    runtime! plugin/guicolorscheme.vim
-    GuiColorScheme darkspectrum
+if (&t_Co == 256 || &t_Co == 88)
+    if !has('gui_running')
+        " Use the guicolorscheme plugin to makes 256-color or 88-color
+        " terminal use GUI colors rather than cterm colors.
+        runtime! plugin/guicolorscheme.vim
+        GuiColorScheme darkspectrum
+    else
+        colorscheme darkspectrum
+    endif
 endif
+
+" Vim 7.3 does not detect "index ..." lines in filetype=diff.
+au BufRead,BufNewFile *.patch syn match diffFile "^index .*$"
 
 " ------------------
 " Whitespace control
@@ -79,8 +109,13 @@ set textwidth=79
 "autocmd BufWritePre * :%s/\s\+$//e
 
 " show tabs as symbols
-set listchars=tab:>-
+set listchars=tab:>\ ,trail:·,extends:⋯,precedes:⋯
 set list
+
+" Directories with specific whitespace settings
+autocmd BufNewFile,BufRead ~/work/binutils/* set tabstop=8
+autocmd BufNewFile,BufRead ~/work/gmake/* set tabstop=8
+autocmd BufNewFile,BufRead *.tex set ft=tex
 
 " ----------------
 " Search behaviour
@@ -91,6 +126,19 @@ set incsearch     " show search matches as you type
 set hlsearch      " highlight search terms
 set smartcase     " ignore case, if search pattern is all lowercase,
                   " case-sensitive otherwise
+" ---------------
+" Version control
+" ---------------
+
+" Git fugitive menu
+menu G.Status :Gstatus<CR>
+menu G.Diff :Gdiff<CR>
+menu G.Commit :Gcommit %<CR>
+menu G.Checkout :Gread<CR>
+menu G.Remove :Gremove<CR>
+menu G.Move :Gmove<CR>
+menu G.Log :Glog<CR>
+menu G.Blame :Gblame<CR>
 
 " ---------------
 " Handy shortcuts
@@ -122,9 +170,24 @@ nmap <silent> ,/ :nohlsearch<CR>
 " Invoke `sort' command on line selection when you press ",s".
 vmap <silent> ,s :!sort<CR>
 
+" Run current buffer in O'Caml interpreter when you press ",o".
+nmap <silent> ,o :!ocaml %<CR>
+
 " Invoke `pyflakes' command when you press ",py".
 nmap <silent> ,py :!pyflakes .<CR>
 
 " Invoke `make' commands when you press ",mX".
 nmap <silent> ,ma :!make<CR>
 nmap <silent> ,mt :!make test<CR>
+
+" Open fugitive menu
+map <F9> :emenu G.<TAB>
+
+" Show syntax highlighting groups for word under cursor
+nmap <F11> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc

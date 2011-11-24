@@ -27,7 +27,7 @@ set background=dark
 
 let g:colors_name="darkspectrum"
 
-hi Normal guifg=#efefef guibg=none
+hi Normal guifg=#efefef gui=none
 
 " highlight groups
 hi Cursor       guibg=#ffffff guifg=#000000

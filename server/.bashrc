@@ -19,6 +19,9 @@ export TERM=xterm-256color
 export PATH="/usr/lib64/ccache/bin:$PATH"
 export TIMEFORMAT="elapsed: %3lR (usr %3lU; sys %3lS; cpu %P%%)"
 
+trap 'printf "\e]0;%s\007" "${BASH_COMMAND}" ' DEBUG
+trap 'printf "\e[1m\e[91mexit: %s\e[0m\n" $?' ERR
+
 alias mf="make -ffast.mk"
 
 function rgrep {

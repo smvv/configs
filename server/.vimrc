@@ -179,6 +179,7 @@ nmap <silent> ,py :!pyflakes .<CR>
 " Invoke `make' commands when you press ",mX".
 nmap <silent> ,ma :!make<CR>
 nmap <silent> ,mt :!make test<CR>
+nmap <silent> ,mc :!make coverage<CR>
 
 " Open fugitive menu
 map <F9> :emenu G.<TAB>

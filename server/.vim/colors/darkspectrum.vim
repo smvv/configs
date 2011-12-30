@@ -27,7 +27,7 @@ set background=dark
 
 let g:colors_name="darkspectrum"
 
-hi Normal guifg=#efefef gui=none
+hi Normal guifg=#efefef guibg=#000000 ctermbg=none gui=none
 
 " highlight groups
 hi Cursor       guibg=#ffffff guifg=#000000
@@ -138,5 +138,8 @@ hi link schemeFunc      Statement
 hi TabLine      guifg=#A3A3A3 guibg=#202020 gui=none
 hi TabLineFill  guifg=#535353 guibg=#202020 gui=none
 hi TabLineSel   guifg=#FFFFFF gui=bold
+
+" Pyflakes warning and errors
+hi pyflakes     guifg=#ccaa00 gui=underline
 
 " vim: sw=4 ts=4

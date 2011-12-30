@@ -11,7 +11,8 @@ snippet doc
 	\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
 
 	\title{${1}}
-	\author{${2}}
+	\author{${2:Sander Mathijs van Veen}}
+	\institute{Universiteit van Amsterdam}
 
 	\begin{document}
 
@@ -19,6 +20,65 @@ snippet doc
 	\tableofcontents
 
 	\pagebreak
+
+	${3}
+
+	\end{document}
+# Tex beamer document
+snippet beam
+	\documentclass{beamer}
+	\usepackage[dutch]{babel}
+	\usepackage[utf8]{inputenc}
+	\usepackage{beamerthemesplit}
+	\usepackage{graphics,booktabs,hyperref,float}
+
+	\definecolor{kugreen}{RGB}{110,131,163}
+	\setbeamercovered{transparent}
+
+	% Custom footer columns widths (modified "infolines" template)
+	\defbeamertemplate*{footline}{compactlines theme} {
+	  \leavevmode%
+	  \hbox{%
+	    \begin{beamercolorbox}[wd=.450000\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}
+	      \usebeamerfont{author in head/foot}\insertshortauthor~~(\insertshortinstitute)
+	    \end{beamercolorbox}
+	    \begin{beamercolorbox}[wd=.350000\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}
+	      \usebeamerfont{title in head/foot}\insertshorttitle
+	    \end{beamercolorbox}%
+	    \begin{beamercolorbox}[wd=.200000\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}
+	      \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2ex}
+	      \insertframenumber{} / \inserttotalframenumber
+	    \end{beamercolorbox}
+	  }
+	  \vskip0pt
+	}
+
+	\mode<presentation> {
+	  \usetheme{Boadilla}
+	  \usecolortheme[named=kugreen]{structure}
+	  \useinnertheme{circles}
+	  \usefonttheme[onlymath]{serif}
+	  \useoutertheme{infolines}
+	  \setbeamertemplate{navigation symbols}{}
+	  \setbeamercovered{transparent}
+	  \setbeamertemplate{footline}[compactlines theme]
+	  \setbeamertemplate{blocks}[rounded][shadow=false]
+	}
+
+	\title{${1}}
+	\subtitle{${2}}
+	\author{${3:Sander Mathijs van Veen}}
+	\institute{Universiteit van Amsterdam}
+
+	\begin{document}
+
+	\frame {
+	  \titlepage
+	}
+
+	\frame { \frametitle{Overzicht}
+	  \tableofcontents[pausesection]
+	}
 
 	${3}
 

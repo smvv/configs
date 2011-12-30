@@ -34,7 +34,7 @@ set background=dark
 set t_Co=256
 
 augroup vimrc_autocmds
-    autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+    autocmd BufEnter * highlight OverLength ctermbg=black guibg=#111111
     autocmd BufEnter * match OverLength /\%81v.*/
 augroup END
 
@@ -65,7 +65,7 @@ syntax enable
 " autocmd BufReadPost *.pdf silent %!pdftotext "%" -nopgbrk -layout -q -eol unix -
 
 " Automatically remove all trailing spaces
-autocmd BufWritePre * :%s/\s\+$//e
+"autocmd BufWritePre * :%s/\s\+$//e
 
 " -----------------
 " Source completion
@@ -82,9 +82,9 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 " File explorer
 " -------------
 
-let g:netrw_liststyle=3    " Use tree-mode as default view
+"let g:netrw_liststyle=3    " Use tree-mode as default view
 "let g:netrw_browse_split=4 " Open file in previous buffer
-let g:netrw_preview=1      " Preview window shown in a vertically split
+"let g:netrw_preview=1      " Preview window shown in a vertically split
 
 " ------------
 " Key bindings

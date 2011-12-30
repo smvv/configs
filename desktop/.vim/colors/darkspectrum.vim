@@ -40,7 +40,6 @@ hi DiffChange      guifg=#7fbdff guibg=#425c78 gui=none
 hi DiffText        guifg=#8ae234 guibg=#4e9a06 gui=none
 "hi DiffDelete      guifg=#252723 guibg=#000000 gui=none
 hi DiffDelete      guifg=#000000 guibg=#000000 gui=none
-"hi ErrorMsg
 
 "DiffAdd        xxx term=bold ctermbg=81 guibg=LightBlue
 "DiffChange     xxx term=bold ctermbg=225 guibg=LightMagenta

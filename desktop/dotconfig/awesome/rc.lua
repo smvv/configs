@@ -9,6 +9,9 @@ require("naughty")
 -- Widget library
 require("vicious")
 
+-- requires dev-lua/oocairo
+require("blingbling")
+
 -- Load Debian menu entries
 -- require("debian.menu")
 
@@ -19,8 +22,7 @@ beautiful.init("/home/".. os.getenv("USER")
                 .. "/.config/awesome/themes/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
--- terminal = "urxvt"
-terminal = "terminal"
+terminal = "urxvt"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -166,6 +168,10 @@ mytasklist.buttons = awful.util.table.join(
 datewidget = widget({ type = "textbox" })
 vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 
+-- Calendar widget to attach to the textclock
+require('calendar2')
+calendar2.addCalendarToWidget(datewidget)
+
 ---- Volume box widget
 --volwidget = widget({type = "textbox"})
 --vicious.register(volwidget, vicious.widgets.volume, " $1 $2 ", 5, 'Master')
@@ -194,14 +200,104 @@ vicious.register(datewidget, vicious.widgets.date, "%b %d, %R")
 --cpuwidget = widget({type = "textbox"})
 --vicious.register(cpuwidget, vicious.widgets.cpu, " | $1% ")
 
-cpuwidget = awful.widget.graph()
-cpuwidget:set_width(50)
-cpuwidget:set_background_color("#494B4F")
-cpuwidget:set_color("#88A175")
---cpuwidget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
+---- CPU usage widget
+--cpuwidget = awful.widget.graph()
+--cpuwidget:set_width(50)
+--cpuwidget:set_background_color("#494B4F")
+--cpuwidget:set_color("#88A175")
+----cpuwidget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
+--
+---- Register widget
+--vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
--- Register widget
-vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
+-- CPU usage graph
+cpugraph=blingbling.classical_graph.new()
+--cpugraph:set_height(18)
+cpugraph:set_width(60)
+cpugraph:set_tiles_color("#33333366")
+cpugraph:set_graph_color("#00000000") -- hide graph body
+--bind top popup on the graph
+blingbling.popups.htop(cpugraph.widget,
+       { title_color=beautiful.notify_font_color_1,
+          user_color=beautiful.notify_font_color_2,
+          root_color=beautiful.notify_font_color_3,
+          terminal="urxvt"})
+vicious.register(cpugraph, vicious.widgets.cpu, '$1', 2)
+
+-- mem usage graph
+memwidget=blingbling.classical_graph.new()
+memwidget:set_width(60)
+memwidget:set_tiles_color("#33333366")
+memwidget:set_graph_line_color("#aaaacccc")
+memwidget:set_filled_color("#00000000")
+memwidget:set_graph_color("#00000000")
+--bind top popup on the graph
+vicious.register(memwidget, vicious.widgets.mem, '$1', 2)
+
+-- Volume widget
+volumecfg = {}
+volumecfg.cardid  = 0
+volumecfg.channel = "Master"
+volumecfg.widget = widget({ type = "textbox", name = "volumecfg.widget", align = "right" })
+
+volumecfg_t = awful.tooltip({ objects = { volumecfg.widget },})
+volumecfg_t:set_text("Volume")
+
+-- command must start with a space!
+volumecfg.mixercommand = function (command)
+       local fd = io.popen("amixer -c " .. volumecfg.cardid .. command)
+       local status = fd:read("*all")
+       fd:close()
+
+       local volume = string.match(status, "(%d?%d?%d)%%")
+       volume = string.format("% 3d", volume)
+       status = string.match(status, "%[(o[^%]]*)%]")
+       if string.find(status, "on", 1, true) then
+               volume = volume .. "%"
+       else
+               volume = volume .. "M"
+       end
+       volumecfg.widget.text = volume
+end
+volumecfg.update = function ()
+       volumecfg.mixercommand(" sget " .. volumecfg.channel)
+end
+volumecfg.up = function ()
+       volumecfg.mixercommand(" sset " .. volumecfg.channel .. " 1%+")
+end
+volumecfg.down = function ()
+       volumecfg.mixercommand(" sset " .. volumecfg.channel .. " 1%-")
+end
+volumecfg.toggle = function ()
+       volumecfg.mixercommand(" sset " .. volumecfg.channel .. " toggle")
+end
+volumecfg.widget:buttons({
+       awful.button({ }, 4, function () volumecfg.up() end),
+       awful.button({ }, 5, function () volumecfg.down() end),
+       awful.button({ }, 1, function () volumecfg.toggle() end)
+})
+volumecfg.update()
+
+---- RAM usage widget
+--memwidget = awful.widget.graph()
+--memwidget:set_width(50)
+--memwidget:set_background_color("#494B4F")
+--memwidget:set_color("#9999cc")
+----cpuwidget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
+--
+---- RAM usage tooltip
+--memwidget_t = awful.tooltip({ objects = { memwidget.widget },})
+--
+--vicious.cache(vicious.widgets.mem)
+--vicious.register(memwidget, vicious.widgets.mem,
+--                function (widget, args)
+--                    memwidget_t:set_text(" RAM: " .. args[2] .. "MB / " .. args[3] .. "MB ")
+--                    return args[1]
+--                 end, 1)
+
+-- Create a gmail widget
+gmailwidget = widget({ type = "textbox" })
+vicious.register(gmailwidget, vicious.widgets.gmail, "<span color=\"red\">M: ${count}</span>", 10)
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
@@ -231,20 +327,20 @@ for s = 1, screen.count() do
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
-            --mylauncher,
-            --batwidget,
-            --volbox,
+            layout = awful.widget.layout.horizontal.leftright,
+            mylayoutbox[s],
             mytaglist[s],
             mypromptbox[s],
-            layout = awful.widget.layout.horizontal.leftright
+            gmailwidget,
+            cpugraph,
+            memwidget,
+            s == 1 and mysystray or nil,
+            volumecfg.widget,
+            datewidget,
+            mytasklist[s]
         },
-        mylayoutbox[s],
         --mytextclock,
         --volwidget,
-        cpuwidget,
-        datewidget,
-        s == 1 and mysystray or nil,
-        mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
 end
@@ -406,6 +502,7 @@ awful.rules.rules = {
     { rule = { class = "liferea" }, properties = { tags = tags[1][2] } },
     { rule = { class = "Wine" }, properties = { floating = true } },
     { rule = { class = "QEMU" }, properties = { floating = true } },
+    { rule = { class = "mplayer" }, properties = { floating = true } },
 
     -- Set Firefox to always map on tags number 3 of screen 1.
     -- { rule = { class = "Firefox" },

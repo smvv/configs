@@ -1,6 +1,7 @@
 " ======================================================================
 " Vim configuration file by: Sander Mathijs van Veen <smvv@kompiler.org>
 " ======================================================================
+set nocompatible    " Disable Vi-compatibility
 
 " ---------------------
 " User inteface options
@@ -55,6 +56,17 @@ set statusline+=%c,    " cursor column
 set statusline+=%l/%L  " cursor line/total lines
 set statusline+=\ %P   " percent through file
 
+" Automatically open, but do not go to (if there are errors) the quickfix /
+" location list window, or close it when is has become empty.
+"
+" Note: Must allow nesting of autocmds to enable any customizations for quickfix
+" buffers.
+" Note: Normally, :cwindow jumps to the quickfix window if the command opens it
+" (but not if it's already open). However, as part of the autocmd, this doesn't
+" seem to happen.
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
 " --------------------
 " Disable visual bells
 " --------------------
@@ -63,7 +75,6 @@ set title           " change the terminal's title
 set visualbell      " don't beep
 set noerrorbells    " don't beep
 set vb t_vb=        " don't beep
-set nocompatible    " Disable Vi-compatibility
 
 " -----------------------
 " Color theme and styling
@@ -87,6 +98,9 @@ endif
 " Vim 7.3 does not detect "index ..." lines in filetype=diff.
 au BufRead,BufNewFile *.patch syn match diffFile "^index .*$"
 
+" Automatically reload vimrc after it's modified.
+au BufWritePost .vimrc so ~/.vimrc
+
 " ------------------
 " Whitespace control
 " ------------------
@@ -104,18 +118,31 @@ set smarttab      " insert tabs on the start of a line according to
                   " shiftwidth, not tabstop
 set tabstop=4
 set textwidth=79
+set colorcolumn=80
 
 " Automatically remove all trailing spaces
 "autocmd BufWritePre * :%s/\s\+$//e
+
+" Remove all trailing spaces
+nnoremap ,W :%s/\s\+$//<cr>:let @/=''<cr>
 
 " show tabs as symbols
 set listchars=tab:>\ ,trail:·,extends:⋯,precedes:⋯
 set list
 
+" Toggle paste mode
+nnoremap <F10> :set invpaste paste?<CR>
+set pastetoggle=<F10>
+set showmode
+
 " Directories with specific whitespace settings
 autocmd BufNewFile,BufRead ~/work/binutils/* set tabstop=8
 autocmd BufNewFile,BufRead ~/work/gmake/* set tabstop=8
 autocmd BufNewFile,BufRead *.tex set ft=tex
+
+" When editing a git commit message (.git/COMMIT_EDITMSG) you often won't start
+" on the first line due to Vim remembering your last position in that file.
+autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
 " ----------------
 " Search behaviour
@@ -126,6 +153,10 @@ set incsearch     " show search matches as you type
 set hlsearch      " highlight search terms
 set smartcase     " ignore case, if search pattern is all lowercase,
                   " case-sensitive otherwise
+
+nnoremap ,n nzz
+nnoremap ,N Nzz
+
 " ---------------
 " Version control
 " ---------------
@@ -162,7 +193,10 @@ noremap k gk
 nnoremap <silent> ,nn :cwindow<CR>:cn<CR>
 nnoremap <silent> ,pp :cwindow<CR>:cp<CR>
 
-nmap ,s Vip :!sort<CR> 
+nmap ,s Vip :!sort<CR>
+
+" Make Y behave like other capitals.
+map Y y$
 
 " It clears the search buffer (and highlighting) when you press ",/".
 nmap <silent> ,/ :nohlsearch<CR>
@@ -180,6 +214,8 @@ nmap <silent> ,py :!pyflakes .<CR>
 nmap <silent> ,ma :!make<CR>
 nmap <silent> ,mt :!make test<CR>
 nmap <silent> ,mc :!make coverage<CR>
+nmap <silent> ,mh :!make html<CR>
+nmap <silent> ,mm :make<CR><cr>
 
 " Open fugitive menu
 map <F9> :emenu G.<TAB>

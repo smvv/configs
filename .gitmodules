@@ -1,3 +1,6 @@
 [submodule "pyflakes"]
 	path = pyflakes
 	url = git://github.com/kevinw/pyflakes.git
+[submodule "server/.vim/bundle/vundle"]
+	path = server/.vim/bundle/vundle
+	url = https://github.com/gmarik/vundle.git

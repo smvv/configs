@@ -2,3 +2,4 @@
 *.netrwhist
 *~
 */.emacs.d/byte-cache/*.pyc
+*/.vim/bundle/*

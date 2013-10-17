@@ -134,12 +134,17 @@ hi link schemeFunc      Statement
 "hi link shSpecialVariables Constant
 "hi link bashSpecialVariables Constant
 
+" Vim layout ------------------------------------------------------------------
 " tabs (non gui)
 hi TabLine      guifg=#A3A3A3 guibg=#202020 gui=none
 hi TabLineFill  guifg=#535353 guibg=#202020 gui=none
 hi TabLineSel   guifg=#FFFFFF gui=bold
 
+hi ColorColumn  guibg=#990000
+
 " Pyflakes warning and errors
 hi pyflakes     guifg=#ccaa00 gui=underline
+
+" Vim spell checker
 
 " vim: sw=4 ts=4

@@ -1,16 +1,25 @@
 #!/bin/bash -e
 
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-    echo "Usage: $0 PROFILE [CONFIG_DIR]"
+if [ $# -gt 1 ]; then
+    echo "Usage: $0 [CONFIG_DIR]"
     exit -1
 fi
 
 # Switch script's directory
 cd `dirname "$0"`
 
-PROFILE="$1"
+PROFILE="server"
 CONFIG_DIR=~/.config
+
 if [ $# -eq 2 ]; then CONFIG_DIR="$2"; fi
+
+function install_homedir() {
+    ln -is "`pwd`/${PROFILE}/$1" "`echo ~`/$1"
+}
+
+function install_etc() {
+    ln -is "`pwd`/${PROFILE}/etc/$1" "/etc/$1"
+}
 
 # Create symbolic links targeting the configuration directories.
 for f in awesome/; do
@@ -18,15 +27,11 @@ for f in awesome/; do
         && ln -is "`pwd`/${PROFILE}/dotconfig/$f" "${CONFIG_DIR}/$f"
 done
 
-for f in .bashrc .gvimrc .vim .vimrc ; do
-    ln -is "`pwd`/${PROFILE}/$f" "`echo ~`/$f"
-done
+install_homedir .bashrc
+install_homedir .dir_colors
+install_homedir .gvimrc
+install_homedir .inputrc
+install_homedir .vim
+install_homedir .vimrc
 
-for f in make.conf; do
-    ln -is "`pwd`/${PROFILE}/etc/$f" "/etc/$f"
-done
-
-for f in elipslint clip2goog clip2firefox; do
-    sudo ln -is "`pwd`/${PROFILE}/usr/bin/$f" "/usr/bin/$f"
-done
-
+install_etc make.conf

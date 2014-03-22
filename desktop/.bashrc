@@ -18,28 +18,19 @@ if [[ "$TERM" != "linux" ]] ; then
     export TERM=xterm-256color
 
     # Command aliases
-    alias vim="gvim -v"
-    alias emacs="emacsclient -c -t"
-    alias suspend="dbus-send --system --print-reply \
-        --dest=org.freedesktop.UPower /org/freedesktop/UPower \
-        org.freedesktop.UPower.Suspend"
+    #alias suspend="dbus-send --system --print-reply \
+    #    --dest=org.freedesktop.UPower /org/freedesktop/UPower \
+    #    org.freedesktop.UPower.Suspend"
+    alias suspend="systemctl suspend"
 fi
-
-alias fx="~/moz/fx/obj-i686-pc-linux-gnu/dist/bin/firefox \
-    -profile ~/.mozilla/firefox/pumlekcd.default &"
 
 alias vo20="autossh -M 20001 -tt vo20 'screen -UxaR'"
 alias openov="autossh -M 20003 -tt openov 'screen -UxaR'"
 alias multivac="autossh -M 20005 -tt multivac 'screen -UxaR -S multivac'"
 alias multicom="autossh -M 20007 -tt multivac 'screen -UxaR -S communication'"
 
-alias rt="killall radiotray; radiotray &>/dev/null &"
-alias sabnzbd="/usr/src/sabnzbd/SABnzbd.py -b 0 &>/dev/null &"
-alias x="startx & vlock"
-
-# Load system-wide CFLAGS, CXXFLAGS and LDFLAGS.
-source /etc/make.conf
-export CXXFLAGS="$CFLAGS"
+alias vi="gvim -v"
+alias vim="gvim -v"
 
 export BROWSER=firefox
 export EDITOR="/usr/bin/gvim -v"
@@ -48,10 +39,12 @@ export PATH="/usr/lib64/ccache/bin:$PATH"
 export PATH="$PATH:/sbin:/usr/sbin:/usr/libexec"
 
 export HISTCONTROL=ignoreboth:erasedups
-export HISTFILESIZE=2000
+export HISTFILESIZE=10000
 export LANG=en_US.utf8
 
 export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \[\033[00m\]\$ '
+
+shopt -s checkwinsize
 
 function extract()
 {

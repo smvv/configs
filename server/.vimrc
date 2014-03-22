@@ -42,6 +42,7 @@ Bundle 'wting/rust.vim'
 
 filetype off
 filetype plugin indent on
+syntax on
 
 " Disable visual bells
 " -----------------------------------------------------------------------------

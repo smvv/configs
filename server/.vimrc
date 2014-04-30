@@ -107,7 +107,7 @@ let NERDTreeShowHidden = 1
 " UltiSnips
 ca use UltiSnipsEdit
 let g:UltiSnipsDontReverseSearchPath = "1" " workaround Vundle
-let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snippets"]
+let g:UltiSnipsSnippetDirectories = ["UltiSnips"]
 let g:UltiSnipsEditSplit = "horizontal"
 let g:UltiSnipsListSnippets = "<c-l>"
 let g:UltiSnipsExpandTrigger = "<tab>"
